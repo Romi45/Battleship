@@ -90,49 +90,29 @@ def ship_overlaps(board, row, column, orientation, ship_length):
 def user_input(place_ship): 
     if place_ship == True: #If we are placing the ships and not guessing their location 
         #since we are placing the ships, we want an input of the orientation, the row and the column
-        while True:
-            try:
-                orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
-                if orientation == "H" or orientation == "V":
-                    break 
-            except TypeError:
-                print("Please enter a valid orientation, H for horizontal or V for vertical")
-        while True:
-            try:
-                row = input("Enter the row 1-8 of the ship: ")
-                if row in '12345678':
-                    row = int(row)-1
-                    break
-            except ValueError:
-                print("Please enter a valid number between 1 and 8")
-        while True:
-            try:
-                column = input("Enter the column of the ship A to H: ").upper()
-                if column in "ABCDEFGH":
-                    column = LETTERS_TO_NUMBERS[column]
-                    break
-            except KeyError:
-                print ("Please enter a valid column letter between A-H")
+        orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
+        while orientation != "H" or orientation != "V":
+          orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
+
+        row = input("Enter the row 1-8 of the ship: ")  
+        while row not in '12345678':
+          row = input("Enter the row 1-8 of the ship: ")
+                
+        row = int(row)-1
+        while column not in "ABCDEFGH":
+          column = input("Enter the column of the ship A to H: ").upper()
+        column = LETTERS_TO_NUMBERS[column]
 
         return row, column, orientation
     else:
         #Since we are now guessing the ships, we don't need to guess the orientation but only the row and the column
-        while True:
-            try:
-                row = input("Enter the row 1-8 of the ship: ")
-                if row in '12345678':
-                    row = int(row) - 1
-                    break
-            except ValueError:
-                print("Please enter a valid number between 1 and 8")
-        while True:
-            try:
-                column = input("Enter the column of the ship A to H: ").upper()
-                if column in "ABCDEFGH":
-                    column = LETTERS_TO_NUMBERS[column]
-                    break
-            except KeyError:
-                print ("Please enter a valid column letter between A-H")
+        while row not in '12345678':
+          row = input("Enter the row 1-8 of the ship: ")
+        row = int(row)-1
+
+        while column not in "ABCDEFGH":
+          column = input("Enter the column of the ship A to H: ").upper()
+        column = LETTERS_TO_NUMBERS[column]
         return row, column
             
 
@@ -180,7 +160,7 @@ while True:
         print_board(PLAYER_GUESS_BOARD)  #Prints the board each time we play a turn
         turn(PLAYER_GUESS_BOARD)
         break
-    if count_hit_ships(PLAYER_GUESS_BOARD) == 17:
+    if count_hit_ships(PLAYER_GUESS_BOARD) == 17: #Once you hit all parts of all the ships, you win
         print(" __     __   ____    _    _        __          __  _____   _   _   _ ")
         print(" \ \   / /  / __ \  | |  | |       \ \        / / |_   _| | \ | | | |")
         print("  \ \_/ /  | |  | | | |  | |        \ \  /\  / /    | |   |  \| | | |")
