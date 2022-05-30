@@ -91,8 +91,11 @@ def user_input(place_ship):
     if place_ship == True: #If we are placing the ships and not guessing their location 
         #since we are placing the ships, we want an input of the orientation, the row and the column
         orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
-        while orientation != "H" or orientation != "V":
-          orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
+        while not orientation_locked:
+          if orientation == "H" or orientation == "V":
+            orientation_locked = True
+          else:
+            orientation = input("Enter orientation, H for horizontal or V for vertical: ").upper()
 
         row = input("Enter the row 1-8 of the ship: ")  
         while row not in '12345678':
